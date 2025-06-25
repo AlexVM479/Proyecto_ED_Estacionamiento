@@ -11,6 +11,6 @@ package com.mycompany.proyectoed;
 public class ProyectoED {
 
     public static void main(String[] args) {
-        System.out.println("Hello Worldebvscvnddsk!");
+        System.out.println("Hola alexitosfdfdg");
     }
 }
