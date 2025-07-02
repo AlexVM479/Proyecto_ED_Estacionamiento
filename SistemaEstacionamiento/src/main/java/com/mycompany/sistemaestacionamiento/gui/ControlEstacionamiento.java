@@ -32,9 +32,9 @@ public class ControlEstacionamiento extends javax.swing.JPanel {
         escenariofondo_panel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         registraringreso_button = new javax.swing.JButton();
-        registrarsalida_button = new javax.swing.JButton();
         mostrarparqueo_button = new javax.swing.JButton();
 
+        setForeground(new java.awt.Color(51, 51, 51));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         escenariofondo_panel.setBackground(new java.awt.Color(248, 248, 248));
@@ -56,19 +56,7 @@ public class ControlEstacionamiento extends javax.swing.JPanel {
                 registraringreso_buttonActionPerformed(evt);
             }
         });
-        add(registraringreso_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 40));
-
-        registrarsalida_button.setBackground(new java.awt.Color(79, 79, 79));
-        registrarsalida_button.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        registrarsalida_button.setForeground(new java.awt.Color(204, 204, 204));
-        registrarsalida_button.setText("Registrar Salida");
-        registrarsalida_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        registrarsalida_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registrarsalida_buttonActionPerformed(evt);
-            }
-        });
-        add(registrarsalida_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 220, 40));
+        add(registraringreso_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 200, 40));
 
         mostrarparqueo_button.setBackground(new java.awt.Color(79, 79, 79));
         mostrarparqueo_button.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -80,18 +68,13 @@ public class ControlEstacionamiento extends javax.swing.JPanel {
                 mostrarparqueo_buttonMouseClicked(evt);
             }
         });
-        add(mostrarparqueo_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, 190, 40));
+        add(mostrarparqueo_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 190, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void registraringreso_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registraringreso_buttonActionPerformed
-        CE_RegistrarIngreso reging = new CE_RegistrarIngreso();
+        CE_Registro_IngresoSalida reging = new CE_Registro_IngresoSalida();
         cambiarPanel(reging);
     }//GEN-LAST:event_registraringreso_buttonActionPerformed
-
-    private void registrarsalida_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarsalida_buttonActionPerformed
-        CE_RegistrarSalida regsal = new CE_RegistrarSalida();
-        cambiarPanel(regsal);
-    }//GEN-LAST:event_registrarsalida_buttonActionPerformed
 
     private void mostrarparqueo_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mostrarparqueo_buttonMouseClicked
         CE_MostrarParqueo parqueo = new CE_MostrarParqueo();
@@ -119,6 +102,5 @@ public class ControlEstacionamiento extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton mostrarparqueo_button;
     private javax.swing.JButton registraringreso_button;
-    private javax.swing.JButton registrarsalida_button;
     // End of variables declaration//GEN-END:variables
 }

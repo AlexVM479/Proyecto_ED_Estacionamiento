@@ -40,6 +40,7 @@ public class Menu extends javax.swing.JFrame {
         controlestacionamiento_button = new javax.swing.JLabel();
         administrarusuarios_button = new javax.swing.JLabel();
         cerrarsesion_button = new javax.swing.JLabel();
+        control_busqueda_button = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema Estacionamiento");
@@ -74,6 +75,21 @@ public class Menu extends javax.swing.JFrame {
         cerrarsesion_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu.add(cerrarsesion_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 150, 50));
 
+        control_busqueda_button.setBackground(new java.awt.Color(0, 0, 102));
+        control_busqueda_button.setForeground(new java.awt.Color(255, 255, 255));
+        control_busqueda_button.setText("Control Búsqueda");
+        control_busqueda_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        control_busqueda_button.setMaximumSize(new java.awt.Dimension(37, 16));
+        control_busqueda_button.setMinimumSize(new java.awt.Dimension(37, 16));
+        control_busqueda_button.setName(""); // NOI18N
+        control_busqueda_button.setPreferredSize(new java.awt.Dimension(37, 16));
+        control_busqueda_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                control_busqueda_buttonMouseClicked(evt);
+            }
+        });
+        menu.add(control_busqueda_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 150, 50));
+
         jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -99,9 +115,14 @@ public class Menu extends javax.swing.JFrame {
     private void administrarusuarios_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_administrarusuarios_buttonMouseClicked
         // TODO add your handling code here:
         System.out.println("Clic en botón administrar usuarios");
-        AdminUser admuser = new AdminUser();
+        AdministrarUser admuser = new AdministrarUser();
         cambiarPanel(admuser);
     }//GEN-LAST:event_administrarusuarios_buttonMouseClicked
+
+    private void control_busqueda_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_control_busqueda_buttonMouseClicked
+        ControlBusqueda ctrest = new ControlBusqueda();
+        cambiarPanel(ctrest);
+    }//GEN-LAST:event_control_busqueda_buttonMouseClicked
     
     private void cambiarPanel(JPanel p){
         
@@ -133,6 +154,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel administrarusuarios_button;
     private javax.swing.JLabel cerrarsesion_button;
+    private javax.swing.JLabel control_busqueda_button;
     private javax.swing.JLabel controlestacionamiento_button;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel menu;
