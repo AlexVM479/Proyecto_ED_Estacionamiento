@@ -30,8 +30,8 @@ public class CE_MostrarParqueo extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        piso2_button = new javax.swing.JButton();
-        piso1_button = new javax.swing.JButton();
+        comedor_button = new javax.swing.JButton();
+        odontologia_button = new javax.swing.JButton();
         fondo_pisos = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -40,31 +40,31 @@ public class CE_MostrarParqueo extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        piso2_button.setBackground(new java.awt.Color(204, 204, 204));
-        piso2_button.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        piso2_button.setForeground(new java.awt.Color(102, 102, 102));
-        piso2_button.setText("Piso 2");
-        piso2_button.setBorder(null);
-        piso2_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        piso2_button.addActionListener(new java.awt.event.ActionListener() {
+        comedor_button.setBackground(new java.awt.Color(204, 204, 204));
+        comedor_button.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        comedor_button.setForeground(new java.awt.Color(102, 102, 102));
+        comedor_button.setText("Comedor");
+        comedor_button.setBorder(null);
+        comedor_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        comedor_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                piso2_buttonActionPerformed(evt);
+                comedor_buttonActionPerformed(evt);
             }
         });
-        jPanel1.add(piso2_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 70, 20));
+        jPanel1.add(comedor_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 110, 20));
 
-        piso1_button.setBackground(new java.awt.Color(204, 204, 204));
-        piso1_button.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        piso1_button.setForeground(new java.awt.Color(102, 102, 102));
-        piso1_button.setText("Piso 1");
-        piso1_button.setBorder(null);
-        piso1_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        piso1_button.addActionListener(new java.awt.event.ActionListener() {
+        odontologia_button.setBackground(new java.awt.Color(204, 204, 204));
+        odontologia_button.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        odontologia_button.setForeground(new java.awt.Color(102, 102, 102));
+        odontologia_button.setText("Odontología");
+        odontologia_button.setBorder(null);
+        odontologia_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        odontologia_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                piso1_buttonActionPerformed(evt);
+                odontologia_buttonActionPerformed(evt);
             }
         });
-        jPanel1.add(piso1_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 70, 20));
+        jPanel1.add(odontologia_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 110, 20));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 610, 40));
 
@@ -72,15 +72,15 @@ public class CE_MostrarParqueo extends javax.swing.JPanel {
         add(fondo_pisos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 520));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void piso1_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_piso1_buttonActionPerformed
-        Piso1 piso_1 = new Piso1();
+    private void odontologia_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odontologia_buttonActionPerformed
+        Estacionamiento_Odonto piso_1 = new Estacionamiento_Odonto();
         cambiarPanel(piso_1);
-    }//GEN-LAST:event_piso1_buttonActionPerformed
+    }//GEN-LAST:event_odontologia_buttonActionPerformed
 
-    private void piso2_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_piso2_buttonActionPerformed
-        Piso2 piso_2 = new Piso2();
+    private void comedor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comedor_buttonActionPerformed
+        Estacionamiento_Comedor piso_2 = new Estacionamiento_Comedor();
         cambiarPanel(piso_2);
-    }//GEN-LAST:event_piso2_buttonActionPerformed
+    }//GEN-LAST:event_comedor_buttonActionPerformed
 
     private void cambiarPanel(JPanel p){
         
@@ -100,9 +100,9 @@ public class CE_MostrarParqueo extends javax.swing.JPanel {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton comedor_button;
     private javax.swing.JPanel fondo_pisos;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton piso1_button;
-    private javax.swing.JButton piso2_button;
+    private javax.swing.JButton odontologia_button;
     // End of variables declaration//GEN-END:variables
 }

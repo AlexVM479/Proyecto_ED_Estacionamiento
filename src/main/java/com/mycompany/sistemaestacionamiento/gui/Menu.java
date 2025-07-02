@@ -19,34 +19,10 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
-        SetImageLabel(controlestacionamiento_button1, "imagenes/controlestacionamiento_button_default.png");
-        SetImageLabel(gestionusuarios_button, "imagenes/administrarusuarios_button_default.png");
+        SetImageLabel(controlestacionamiento_button, "imagenes/controlestacionamiento_button_default.png");
+        SetImageLabel(administrarusuarios_button, "imagenes/administrarusuarios_button_default.png");
         SetImageLabel(cerrarsesion_button, "imagenes/cerrarsesion_button_default.png");
-        //SetImageLabel(menu_background, "imagenes/menu_image.png");
-        /*
-        //Imagen para barra
-        // 1. Crear el nuevo panel con imagen de fondo
-        FondoPanel fondo = new FondoPanel("imagenes/menu_image.png");
 
-        // 2. Ajustar su tamaño y layout igual al panel original
-        fondo.setBounds(menu.getBounds());
-        fondo.setLayout(menu.getLayout());
-
-        // 3. Pasar los componentes del panel original al nuevo
-        Component[] componentes = menu.getComponents();
-        for (Component comp : componentes) {
-            menu.remove(comp);
-            fondo.add(comp);
-        }
-
-        // 4. Reemplazar el panel `menu` en el JFrame
-        this.remove(menu);
-        this.add(fondo);
-
-        // 5. Forzar actualización de la interfaz
-        this.revalidate();
-        this.repaint();
-        */
     }
 
     /**
@@ -61,9 +37,10 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         panel_menu = new javax.swing.JPanel();
         menu = new javax.swing.JPanel();
-        controlestacionamiento_button1 = new javax.swing.JLabel();
-        gestionusuarios_button = new javax.swing.JLabel();
+        controlestacionamiento_button = new javax.swing.JLabel();
+        administrarusuarios_button = new javax.swing.JLabel();
         cerrarsesion_button = new javax.swing.JLabel();
+        control_busqueda_button = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema Estacionamiento");
@@ -74,27 +51,46 @@ public class Menu extends javax.swing.JFrame {
 
         panel_menu.setBackground(new java.awt.Color(255, 255, 255));
         panel_menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(panel_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 570, 460));
+        jPanel1.add(panel_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 610, 600));
 
-        menu.setBackground(new java.awt.Color(255, 255, 255));
+        menu.setBackground(new java.awt.Color(204, 204, 204));
         menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        controlestacionamiento_button1.addMouseListener(new java.awt.event.MouseAdapter() {
+        controlestacionamiento_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        controlestacionamiento_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                controlestacionamiento_button1MouseClicked(evt);
+                controlestacionamiento_buttonMouseClicked(evt);
             }
         });
-        menu.add(controlestacionamiento_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 140, 40));
+        menu.add(controlestacionamiento_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 150, 50));
 
-        gestionusuarios_button.addMouseListener(new java.awt.event.MouseAdapter() {
+        administrarusuarios_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        administrarusuarios_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                gestionusuarios_buttonMouseClicked(evt);
+                administrarusuarios_buttonMouseClicked(evt);
             }
         });
-        menu.add(gestionusuarios_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 140, 40));
-        menu.add(cerrarsesion_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 140, 40));
+        menu.add(administrarusuarios_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 150, 50));
 
-        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 460));
+        cerrarsesion_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu.add(cerrarsesion_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 150, 50));
+
+        control_busqueda_button.setBackground(new java.awt.Color(0, 0, 102));
+        control_busqueda_button.setForeground(new java.awt.Color(255, 255, 255));
+        control_busqueda_button.setText("Control Búsqueda");
+        control_busqueda_button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        control_busqueda_button.setMaximumSize(new java.awt.Dimension(37, 16));
+        control_busqueda_button.setMinimumSize(new java.awt.Dimension(37, 16));
+        control_busqueda_button.setName(""); // NOI18N
+        control_busqueda_button.setPreferredSize(new java.awt.Dimension(37, 16));
+        control_busqueda_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                control_busqueda_buttonMouseClicked(evt);
+            }
+        });
+        menu.add(control_busqueda_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 150, 50));
+
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,23 +100,29 @@ public class Menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void controlestacionamiento_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_controlestacionamiento_button1MouseClicked
+    private void controlestacionamiento_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_controlestacionamiento_buttonMouseClicked
         // TODO add your handling code here:
         ControlEstacionamiento ctrest = new ControlEstacionamiento();
         cambiarPanel(ctrest);
-    }//GEN-LAST:event_controlestacionamiento_button1MouseClicked
+    }//GEN-LAST:event_controlestacionamiento_buttonMouseClicked
 
-    private void gestionusuarios_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gestionusuarios_buttonMouseClicked
+    private void administrarusuarios_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_administrarusuarios_buttonMouseClicked
         // TODO add your handling code here:
-        AdminUser ctres = new AdminUser();
-        cambiarPanel(ctres);
-    }//GEN-LAST:event_gestionusuarios_buttonMouseClicked
+        System.out.println("Clic en botón administrar usuarios");
+        AdministrarUser admuser = new AdministrarUser();
+        cambiarPanel(admuser);
+    }//GEN-LAST:event_administrarusuarios_buttonMouseClicked
+
+    private void control_busqueda_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_control_busqueda_buttonMouseClicked
+        ControlBusqueda ctrest = new ControlBusqueda();
+        cambiarPanel(ctrest);
+    }//GEN-LAST:event_control_busqueda_buttonMouseClicked
     
     private void cambiarPanel(JPanel p){
         
@@ -137,55 +139,26 @@ public class Menu extends javax.swing.JFrame {
         
     }
     
-    private void SetImageLabel(JLabel labelName, String root) {
-        URL imageURL = getClass().getClassLoader().getResource(root);
-        if (imageURL != null) {
-            ImageIcon image = new ImageIcon(imageURL);
-            Icon icon = new ImageIcon(
-                image.getImage().getScaledInstance(
-                    labelName.getWidth(),
-                    labelName.getHeight(),
-                    Image.SCALE_SMOOTH
-                )
-            );
-            labelName.setIcon(icon);
-            this.repaint();
-        } else {
-            System.err.println("No se pudo encontrar la imagen: " + root);
-        }
+    private void SetImageLabel(JLabel label, String path) {
+    URL imageURL = getClass().getClassLoader().getResource(path);
+    if (imageURL != null) {
+        ImageIcon image = new ImageIcon(imageURL);
+        Icon icon = new ImageIcon(image.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+        label.setIcon(icon);
+        this.repaint();
+    } else {
+        System.err.println("No se pudo encontrar la imagen: " + path);
     }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel administrarusuarios_button;
     private javax.swing.JLabel cerrarsesion_button;
-    private javax.swing.JLabel controlestacionamiento_button1;
-    private javax.swing.JLabel gestionusuarios_button;
+    private javax.swing.JLabel control_busqueda_button;
+    private javax.swing.JLabel controlestacionamiento_button;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel panel_menu;
     // End of variables declaration//GEN-END:variables
-
-    /*class FondoPanel extends JPanel {
-
-        private Image imagen;
-
-        public FondoPanel(String rutaImagen) {
-            URL imageUrl = getClass().getClassLoader().getResource(rutaImagen);
-            if (imageUrl != null) {
-                this.imagen = new ImageIcon(imageUrl).getImage();
-            } else {
-                System.err.println("️No se encontró la imagen: " + rutaImagen);
-            }
-        }
-
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            System.out.println("Pintando el fondo del panel...");
-
-            if (imagen != null) {
-                g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
-            }
-        }
-    }*/
-
 
 }
