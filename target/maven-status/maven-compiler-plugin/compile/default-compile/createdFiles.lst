@@ -1,2 +1,5 @@
-com/mycompany/sistemaestacionamiento/Conexion.class
-com/mycompany/sistemaestacionamiento/Conectando.class
+control_busqueda\HistorialController.class
+control_busqueda\Conductor.class
+com\mycompany\sistemaestacionamiento\Conectando.class
+com\mycompany\sistemaestacionamiento\Conexion.class
+control_busqueda\HistorialEstacionamiento.class
