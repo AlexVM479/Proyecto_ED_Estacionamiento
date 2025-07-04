@@ -26,7 +26,7 @@ public class fechaBusqueda extends javax.swing.JPanel {
         List<HistorialEstacionamiento> resultados = controller.buscarHistorialPorFecha(fecha);
 
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new String[]{"Codigo","Nombre", "Apellidos", "Placa", "Tipo", "Zona", "Fecha", "Entrada", "Salida"});
+        modelo.setColumnIdentifiers(new String[]{"Codigo","Nombre", "Apellidos", "Placa", "Tipo", "Zona", "Entrada", "Salida"});
         for (HistorialEstacionamiento h : resultados) {
             modelo.addRow(new Object[]{
                 h.getCodigoConductor(),
@@ -35,7 +35,7 @@ public class fechaBusqueda extends javax.swing.JPanel {
                 h.getPlaca(),
                 h.getTipoVehiculo(),
                 h.getZona(),
-                h.getFecha(),
+                
                 h.getHoraEntrada(),
                 h.getHoraSalida()
             });
@@ -70,7 +70,6 @@ public class fechaBusqueda extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        jTable1.setBackground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
