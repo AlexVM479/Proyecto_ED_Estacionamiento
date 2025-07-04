@@ -24,6 +24,7 @@ public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
         registrarsalida_button.addActionListener(e -> registrarSalida());
         restablecer_ingreso_button.addActionListener(e -> restablecerIngreso());
         restablecer_salida_button.addActionListener(e -> restablecerSalida());
+        buscarvehiculo_button.addActionListener(e -> buscarVehiculo());
     }
 
     private void registrarIngreso() {
@@ -93,66 +94,68 @@ public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
     }
 }
     
-    // Método para registrar la salida del vehículo
+    private void buscarVehiculo() {
+     try {
+         // Obtener la placa del vehículo
+         String placa = Nplaca_salida_txt.getText().trim();
+         HistorialEstacionamiento historial = historialController.buscarHistorialPorPlaca(placa);
+
+         if (historial == null) {
+             aviso_busqueda.setText("Vehículo no encontrado.");
+             return;
+         }
+
+         // Mostrar los datos del vehículo
+         espacio_txt.setText(historial.getZona());
+         horaingreso_salida_txt.setText(historial.getHoraEntrada().toString());
+         tipovehiculo_txt.setText(historial.getTipoVehiculo());
+         
+         // Aquí no se realiza la salida aún
+     } catch (Exception e) {
+         System.out.println("❌ Error al buscar vehículo: " + e.getMessage());
+     }
+ }
+
     private void registrarSalida() {
-    try {
-        // Obtener la placa del vehículo para buscar el historial
-        String placa = Nplaca_salida_txt.getText().trim();
+     try {
+         // Obtener la placa del vehículo para registrar la salida
+         String placa = Nplaca_salida_txt.getText().trim();
+         HistorialEstacionamiento historial = historialController.buscarHistorialPorPlaca(placa);
 
-        // Verificar si la placa está vacía o no es válida
-        if (placa.isEmpty()) {
-            aviso_busqueda.setText("Por favor ingrese una placa.");
-            return;
-        }
+         if (historial == null) {
+             aviso_busqueda.setText("Vehículo no encontrado.");
+             return;
+         }
 
-        // Buscar el historial de estacionamiento con la placa
-        HistorialEstacionamiento historial = historialController.buscarHistorialPorPlaca(placa);
+         // Calcular el tiempo total de estacionamiento
+         LocalTime horaIngreso = historial.getHoraEntrada();
+         LocalTime horaSalida = LocalTime.now();
+         long tiempoTotal = java.time.temporal.ChronoUnit.MINUTES.between(horaIngreso, horaSalida);
+         tiempototal_txt.setText(tiempoTotal + " minutos");
 
-        if (historial == null) {
-            aviso_busqueda.setText("Vehículo no encontrado.");
-            return;
-        }
+         // Registrar la salida en la base de datos
+         boolean exito = estacionamientoController.registrarSalida(placa);
 
-        // Mostrar detalles del historial
-        System.out.println("Historial encontrado para la placa: " + placa);
-        System.out.println("Hora de ingreso: " + historial.getHoraEntrada());
-        System.out.println("Zona asignada: " + historial.getZona());
+         if (exito) {
+             aviso_busqueda.setText("Salida registrada exitosamente.");
+         } else {
+             aviso_busqueda.setText("Error al registrar salida.");
+         }
+     } catch (Exception e) {
+         System.out.println("❌ Error al registrar salida: " + e.getMessage());
+     }
+ }
 
-        // Calcular el tiempo total de estacionamiento
-        LocalTime horaIngreso = historial.getHoraEntrada();
-        LocalTime horaSalida = LocalTime.now();
-        long tiempoTotal = java.time.temporal.ChronoUnit.MINUTES.between(horaIngreso, horaSalida);
-
-        // Mostrar tiempo total
-        tiempototal_txt.setText(tiempoTotal + " minutos");
-
-        // Registrar la salida
-        boolean exito = estacionamientoController.registrarSalida(placa);
-
-        if (exito) {
-            // Mostrar información del vehículo en la sección de salida
-            espacio_txt.setText(historial.getZona());
-            horaingreso_salida_txt.setText(horaIngreso.toString());
-            tipovehiculo_txt.setText(historial.getTipoVehiculo());
-            aviso_busqueda.setText("Salida registrada correctamente.");
-        } else {
-            aviso_busqueda.setText("Error al registrar salida.");
-        }
-    } catch (Exception e) {
-        // Imprimir el error en consola si ocurre algo inesperado
-        System.out.println("❌ Error al registrar salida: " + e.getMessage());
-    }
-}
-
-    // Método para restablecer los campos de ingreso
     private void restablecerIngreso() {
         codigo_txt.setText("");
         Nplaca_ingreso_txt.setText("");
         hayespaciodisponible_txt.setText("");
         aviso_Nplaca.setText("");
+        espacioasignado_txt.setText("");
+        encoladoposicion_txt.setText("");
+        horaingreso_txt.setText("");
     }
 
-    // Método para restablecer los campos de salida
     private void restablecerSalida() {
         Nplaca_salida_txt.setText("");
         tiempototal_txt.setText("");
@@ -405,7 +408,7 @@ public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
         aviso_busqueda.setBackground(new java.awt.Color(51, 51, 51));
         aviso_busqueda.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         aviso_busqueda.setForeground(new java.awt.Color(255, 102, 102));
-        add(aviso_busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, 160, 30));
+        add(aviso_busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 300, 30));
 
         jPanel2.setBackground(new java.awt.Color(36, 36, 36));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
