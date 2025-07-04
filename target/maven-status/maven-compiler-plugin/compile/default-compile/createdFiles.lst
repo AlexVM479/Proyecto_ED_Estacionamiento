@@ -1,5 +1,7 @@
-control_busqueda\HistorialController.class
-control_busqueda\Conductor.class
-com\mycompany\sistemaestacionamiento\Conectando.class
-com\mycompany\sistemaestacionamiento\Conexion.class
-control_busqueda\HistorialEstacionamiento.class
+Registro_Alex/Estacionamiento.class
+Registro_Alex/VehiculoController.class
+Registro_Alex/Vehiculo.class
+Registro_Alex/EstacionamientoController.class
+Registro_Alex/HistorialController.class
+Registro_Alex/HistorialEstacionamiento.class
+Registro_Alex/Conductor.class
