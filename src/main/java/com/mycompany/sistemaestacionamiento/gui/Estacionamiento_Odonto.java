@@ -26,7 +26,7 @@ public class Estacionamiento_Odonto extends javax.swing.JPanel {
     private void cargarEstacionamientos() {
         try (Connection conn = Conexion.conectar()) {
             // Consulta SQL para obtener estacionamientos con estado = 0 (vacío)
-            String sql = "SELECT * FROM ESTACIONAMIENTO WHERE estado = 0 AND lugar LIKE ?";
+            String sql = "SELECT * FROM ESTACIONAMIENTO WHERE lugar LIKE ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             String lugar = "Odontología";  // O el lugar que corresponda, por ejemplo "Comedor"
             stmt.setString(1, lugar + "%");  // Concatenar "%" para hacer la búsqueda por lugar
@@ -49,21 +49,24 @@ public class Estacionamiento_Odonto extends javax.swing.JPanel {
     
     // Actualizar los colores de los paneles según el estado de cada espacio
     private void actualizarEstadoEspacios() {
-    for (int i = 0; i < estacionamientos.size(); i++) {
-        Estacionamiento espacio = estacionamientos.get(i);
-        JPanel panel = obtenerPanelPorId(espacio.getId()); // Obtener el panel correspondiente por ID
+
+        for (int i = 0; i < estacionamientos.size(); i++) {
+            Estacionamiento espacio = estacionamientos.get(i);
+            JPanel panel = obtenerPanelPorId(espacio.getId());
 
             if (panel != null) {
+                panel.setOpaque(true); // MUY IMPORTANTE: asegura que se pinte el fondo
+
                 if (espacio.getEstado() == 1) {
-                    panel.setBackground(Color.RED);  // Ocupado (rojo)
+                    panel.setBackground(new Color(220, 20, 60)); // Rojo Carmesí (ocupado)
                 } else {
-                    panel.setBackground(Color.GREEN);  // Libre (verde)
+                    panel.setBackground(new Color(34, 139, 34)); // Verde Bosque (libre)
                 }
-                panel.repaint(); // Asegúrate de que el panel se repinte
-            }
+                panel.setOpaque(true); // Asegura que el fondo se pinte
+                panel.repaint();
         }
     }
-    
+}    
     // Obtener el panel correspondiente según el ID del espacio
     private JPanel obtenerPanelPorId(int id) {
         switch (id) {
