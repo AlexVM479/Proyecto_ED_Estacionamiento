@@ -11,6 +11,10 @@ public class Estacionamiento {
         this.lugar = lugar;
         this.estado = estado;
     }
+    
+    public Estacionamiento() {
+    // Constructor vacío, útil si quieres crear un objeto sin pasar argumentos.
+    }
 
     // Getters y Setters
     public int getId() {

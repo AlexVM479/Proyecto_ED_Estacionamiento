@@ -5,6 +5,8 @@ import java.sql.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EstacionamientoController {
 
@@ -115,5 +117,26 @@ public class EstacionamientoController {
         }
         
         return estacionamiento; // Devuelve el estacionamiento disponible o null si no se encontró
+    }
+    
+    // Obtener los estados de todos los espacios de odontología
+    public List<Estacionamiento> obtenerEstacionamientosOdontologia() {
+        List<Estacionamiento> estacionamientos = new ArrayList<>();
+        try (Connection conn = Conexion.conectar()) {
+            String sql = "SELECT * FROM ESTACIONAMIENTO WHERE lugar LIKE 'Odontología%'";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Estacionamiento espacio = new Estacionamiento();
+                espacio.setId(rs.getInt("id"));
+                espacio.setEstado(rs.getInt("estado"));
+                espacio.setLugar(rs.getString("lugar"));
+                estacionamientos.add(espacio);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al obtener estacionamientos: " + e.getMessage());
+        }
+        return estacionamientos;
     }
 }
