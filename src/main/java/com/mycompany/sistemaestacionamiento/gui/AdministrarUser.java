@@ -1,32 +1,113 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package com.mycompany.sistemaestacionamiento.gui;
 
 import java.awt.*;
 import java.net.URL;
 import javax.swing.*;
+import codigos_jos.Trabajador;
+import codigos_jos.TrabajadorDAO;
+import java.util.List;
 
-/**
- *
- * @author Jose
- */
 public class AdministrarUser extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AdminUser
-     */
+    private boolean mostrarContraseña = false;
+
     public AdministrarUser() {
         try {
-            initComponents();
-            SetImageLabel(jLabel9, "imagenes/usuario_icon.png");
-            SetImageLabel(jLabel12, "imagenes/usuario_icon.png");
-            SetImageLabel(jLabel14, "imagenes/usuario_icon.png");
-            SetImageLabel(jLabel43, "imagenes/usuario_icon.png");
-            SetImageLabel(jLabel45, "imagenes/usuario_icon.png");
-            SetImageLabel(jLabel47, "imagenes/usuario_icon.png");
-            SetImageLabel(jLabel41, "imagenes/ojo_icon.png");
+initComponents();
+SetImageLabel(jLabel9, "imagenes/usuario_icon.png");
+SetImageLabel(jLabel12, "imagenes/usuario_icon.png");
+SetImageLabel(jLabel14, "imagenes/usuario_icon.png");
+SetImageLabel(jLabel43, "imagenes/usuario_icon.png");
+SetImageLabel(jLabel45, "imagenes/usuario_icon.png");
+SetImageLabel(jLabel47, "imagenes/usuario_icon.png");
+SetImageLabel(jLabel41, "imagenes/ojo_icon.png");
+
+jLabel41.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+jLabel41.addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent evt) {
+        mostrarContraseña = !mostrarContraseña;
+        if (mostrarContraseña) {
+            jPasswordField3.setEchoChar((char) 0); // Mostrar texto
+        } else {
+            jPasswordField3.setEchoChar('•'); // Ocultar con puntos o usa '*'
+        }
+    }
+});
+
+
+cargarPanelesTrabajadores(); // nuevo método que vamos a crear
+
+jTextField18.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        confirmarYAgregarUsuario();
+    }
+});
+jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        eliminarUsuarioSeleccionado();
+    }
+});
+jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        habilitarEdicionYConfirmar();
+    }
+});
+jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        // Validar que esté habilitada la edición
+        if (!jTextField14.isEditable()) {
+            JOptionPane.showMessageDialog(null, "ℹ️ Primero presiona el botón EDIT para habilitar la edición.");
+            return;
+        }
+
+        int confirmarGuardar = JOptionPane.showConfirmDialog(null,
+            "¿Deseas guardar los cambios?",
+            "Confirmar edición",
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirmarGuardar == JOptionPane.YES_OPTION) {
+            String usuario = jTextField13.getText(); // no se edita
+            String nuevoUserName = jTextField14.getText();
+            String nuevaContraseña = new String(jPasswordField3.getPassword());
+            String nuevoNombre = jTextField15.getText();
+            String nuevosApellidos = jTextField16.getText();
+            String nuevoDni = jTextField1.getText();
+            String nuevaDireccion = jTextField17.getText();
+            String nuevoCelular = jTextField18.getText();
+
+            if (nuevoUserName.isEmpty() || nuevaContraseña.isEmpty() || nuevoNombre.isEmpty()
+                || nuevosApellidos.isEmpty() || nuevoDni.isEmpty()
+                || nuevaDireccion.isEmpty() || nuevoCelular.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "❌ Todos los campos deben estar llenos.");
+                return;
+            }
+
+            Trabajador nuevo = new Trabajador(usuario, nuevaContraseña, nuevoNombre, nuevosApellidos, nuevoDni, nuevaDireccion, nuevoCelular);
+
+            boolean actualizado = TrabajadorDAO.actualizarTrabajador(nuevo);
+
+            if (actualizado) {
+                JOptionPane.showMessageDialog(null, "✅ Datos actualizados correctamente.");
+                cargarPanelesTrabajadores();
+            } else {
+                JOptionPane.showMessageDialog(null, "❌ No se pudo actualizar el trabajador.");
+            }
+
+            // Bloquear los campos después de editar
+            jPasswordField3.setEditable(false);
+            jTextField14.setEditable(false);
+            jTextField15.setEditable(false);
+            jTextField16.setEditable(false);
+            jTextField17.setEditable(false);
+            jTextField18.setEditable(false);
+            jTextField1.setEditable(false);
+        }
+    }
+});
+
+
         } catch (Exception e) {
             e.printStackTrace(); // esto mostrará la línea exacta donde falla
             JOptionPane.showMessageDialog(null, "Error en AdminUser: " + e.getMessage());
@@ -34,11 +115,7 @@ public class AdministrarUser extends javax.swing.JPanel {
         
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -60,10 +137,10 @@ public class AdministrarUser extends javax.swing.JPanel {
         jLabel40 = new javax.swing.JLabel();
         jTextField15 = new javax.swing.JTextField();
         jTextField16 = new javax.swing.JTextField();
-        jComboBox3 = new javax.swing.JComboBox<>();
         jTextField17 = new javax.swing.JTextField();
         jTextField18 = new javax.swing.JTextField();
         jLabel41 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -90,6 +167,7 @@ public class AdministrarUser extends javax.swing.JPanel {
         jToggleButton3 = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jToggleButton4 = new javax.swing.JToggleButton();
 
         setBackground(new java.awt.Color(248, 248, 248));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -167,8 +245,8 @@ public class AdministrarUser extends javax.swing.JPanel {
 
         jLabel38.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(82, 82, 82));
-        jLabel38.setText("Rol : ");
-        jPanel6.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 329, -1, -1));
+        jLabel38.setText("DNI : ");
+        jPanel6.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
 
         jLabel39.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel39.setForeground(new java.awt.Color(82, 82, 82));
@@ -178,7 +256,7 @@ public class AdministrarUser extends javax.swing.JPanel {
         jLabel40.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(82, 82, 82));
         jLabel40.setText("Celular :");
-        jPanel6.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 412, -1, -1));
+        jPanel6.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
         jTextField15.setBackground(new java.awt.Color(51, 51, 51));
         jTextField15.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -196,19 +274,6 @@ public class AdministrarUser extends javax.swing.JPanel {
         jTextField16.setCaretColor(new java.awt.Color(204, 204, 204));
         jPanel6.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 276, 129, 20));
 
-        jComboBox3.setBackground(new java.awt.Color(51, 51, 51));
-        jComboBox3.setEditable(true);
-        jComboBox3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jComboBox3.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox3.setBorder(null);
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 326, 129, -1));
-
         jTextField17.setBackground(new java.awt.Color(51, 51, 51));
         jTextField17.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jTextField17.setForeground(new java.awt.Color(255, 255, 255));
@@ -225,6 +290,19 @@ public class AdministrarUser extends javax.swing.JPanel {
         jTextField18.setCaretColor(new java.awt.Color(204, 204, 204));
         jPanel6.add(jTextField18, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 405, 129, 20));
         jPanel6.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 20, 20));
+
+        jTextField1.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setText("jTextField7");
+        jTextField1.setBorder(null);
+        jTextField1.setCaretColor(new java.awt.Color(204, 204, 204));
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 320, 129, 20));
 
         add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, 460));
 
@@ -352,19 +430,48 @@ public class AdministrarUser extends javax.swing.JPanel {
         jLabel1.setText("Administrar Usuarios");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 190, 30));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 190, 20));
+
+        jToggleButton4.setBackground(new java.awt.Color(31, 39, 115));
+        jToggleButton4.setFont(new java.awt.Font("Segoe UI Black", 1, 10)); // NOI18N
+        jToggleButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jToggleButton4.setText("SAVE");
+        jToggleButton4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jToggleButton4.setMaximumSize(new java.awt.Dimension(45, 20));
+        jToggleButton4.setMinimumSize(new java.awt.Dimension(45, 20));
+        jToggleButton4.setPreferredSize(new java.awt.Dimension(45, 20));
+        add(jToggleButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 540, 60, 30));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
-
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
+    // Limpiar todos los campos
+    jTextField13.setText("");
+    jTextField14.setText("");
+    jPasswordField3.setText("");
+    jTextField15.setText("");
+    jTextField16.setText("");
+    jTextField17.setText("");
+    jTextField18.setText("");
+    jTextField1.setText("");
+  // Habilitar campos para edición
+    jTextField13.setEditable(true);
+    jTextField14.setEditable(true);
+    jPasswordField3.setEditable(true);
+    jTextField15.setEditable(true);
+    jTextField16.setEditable(true);
+    jTextField17.setEditable(true);
+    jTextField18.setEditable(true);
+    jTextField1.setEditable(true);
+    // Colocar el foco en el primer campo
+    jTextField13.requestFocus();
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jPasswordField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField3ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
     
     
     private void SetImageLabel(JLabel labelName, String root) {
@@ -390,8 +497,209 @@ public class AdministrarUser extends javax.swing.JPanel {
         }
     }
 
+private void mostrarDatosTrabajador(Trabajador t) {
+    jTextField13.setText(t.getUsuario());
+    jTextField14.setText(t.getUsuario());
+    jPasswordField3.setText(t.getContraseña());
+    jTextField15.setText(t.getNombre());
+    jTextField16.setText(t.getApellidos());
+    jTextField17.setText(t.getDireccion());
+    jTextField18.setText(t.getCelular());
+    jTextField1.setText(t.getDni());
+    //bloquea
+    jTextField13.setEditable(false);
+    jTextField14.setEditable(false);
+    jPasswordField3.setEditable(false);
+    jTextField15.setEditable(false);
+    jTextField16.setEditable(false);
+    jTextField17.setEditable(false);
+    jTextField18.setEditable(false);
+    jTextField1.setEditable(false);
+    
+}
+
+    
+private void cargarPanelesTrabajadores() {
+    try {
+        List<Trabajador> trabajadores = TrabajadorDAO.obtenerTrabajadores();
+
+     jPanel7.removeAll();  // limpia la lista lateral
+     jPanel7.setLayout(new BoxLayout(jPanel7, BoxLayout.Y_AXIS)); // para scroll correcto
+
+        for (Trabajador t : trabajadores) {
+    JPanel panel = new JPanel();
+    panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    panel.setBackground(new java.awt.Color(31, 39, 115));
+    panel.setPreferredSize(new Dimension(150, 50)); // alto fijo
+
+    JLabel labelIcono = new JLabel();
+    labelIcono.setPreferredSize(new Dimension(30, 30));
+    labelIcono.setIcon(new ImageIcon(getClass().getClassLoader().getResource("imagenes/usuario_icon.png")));
+
+    JLabel labelTexto = new JLabel(t.getNombre() + " " + t.getApellidos());
+    labelTexto.setFont(new java.awt.Font("Century Gothic", 1, 12));
+    labelTexto.setForeground(Color.WHITE);
+
+    panel.add(labelIcono);
+    panel.add(labelTexto);
+
+    // ✅ evento al hacer clic
+    panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    panel.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            mostrarDatosTrabajador(t);
+        }
+    });
+
+    jPanel7.add(panel);
+        }
+
+        jPanel7.revalidate();
+        jPanel7.repaint();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "❌ Error al cargar trabajadores: " + e.getMessage());
+    }
+}
+
+private void confirmarYAgregarUsuario() {
+    String usuario = jTextField13.getText();
+    String contraseña = new String(jPasswordField3.getPassword());
+    String nombre = jTextField15.getText();
+    String apellidos = jTextField16.getText();
+    String direccion = jTextField17.getText();
+    String celular = jTextField18.getText();
+    String dni = jTextField1.getText();  // ✅ aquí el cambio importante
+
+    if (usuario.isEmpty() || contraseña.isEmpty() || nombre.isEmpty() ||
+        apellidos.isEmpty() || direccion.isEmpty() || celular.isEmpty() || dni.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "❌ Por favor, completa todos los campos.");
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(this,
+        "¿Deseas agregar a este usuario?",
+        "Confirmar registro",
+        JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            Trabajador t = new Trabajador(usuario, contraseña, nombre, apellidos, dni, direccion, celular);
+            // t.setRol(rol);  // ❌ ya no es necesario
+            boolean insertado = TrabajadorDAO.insertarTrabajador(t);
+
+            if (insertado) {
+                JOptionPane.showMessageDialog(this, "✅ Trabajador insertado correctamente.");
+                cargarPanelesTrabajadores();
+            } else {
+                JOptionPane.showMessageDialog(this, "⚠️ No se pudo insertar el trabajador.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "❌ Error: " + e.getMessage());
+        }
+    }
+}
+
+private void eliminarUsuarioSeleccionado() {
+    String usuario = jTextField13.getText();
+
+    if (usuario.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "❌ Selecciona un trabajador para eliminar.");
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(this,
+        "¿Estás seguro de que deseas eliminar al usuario: " + usuario + "?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        boolean eliminado = TrabajadorDAO.eliminarTrabajador(usuario);
+        if (eliminado) {
+            JOptionPane.showMessageDialog(this, "✅ Trabajador eliminado correctamente.");
+            cargarPanelesTrabajadores();
+            jToggleButton1.doClick(); // Limpia los campos como si se presionara el botón NEW
+        } else {
+            JOptionPane.showMessageDialog(this, "⚠️ No se pudo eliminar el trabajador.");
+        }
+    }
+}
+
+private void habilitarEdicionYConfirmar() {
+    String usuario = jTextField13.getText();
+
+    if (usuario.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "❌ Selecciona un trabajador primero.");
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(this,
+        "¿Desea editar este usuario: " + usuario + "?",
+        "Confirmar edición",
+        JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Habilitar los campos para edición (menos el usuario)
+        jPasswordField3.setEditable(true);
+        jTextField14.setEditable(true);
+        jTextField15.setEditable(true);
+        jTextField16.setEditable(true);
+        jTextField17.setEditable(true);
+        jTextField18.setEditable(true);
+        jTextField1.setEditable(true);
+
+        // Eliminar listeners anteriores para evitar duplicación
+        for (java.awt.event.ActionListener al : jTextField18.getActionListeners()) {
+            jTextField18.removeActionListener(al);
+        }
+
+        // Esperar ENTER en jTextField18 para guardar cambios
+        jTextField18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                int confirmarGuardar = JOptionPane.showConfirmDialog(null,
+                    "¿Deseas guardar los cambios?",
+                    "Confirmar edición",
+                    JOptionPane.YES_NO_OPTION);
+
+                if (confirmarGuardar == JOptionPane.YES_OPTION) {
+                    String nuevoUserName = jTextField14.getText();
+                    String nuevaContraseña = new String(jPasswordField3.getPassword());
+                    String nuevoNombre = jTextField15.getText();
+                    String nuevosApellidos = jTextField16.getText();
+                    String nuevoDni = jTextField1.getText();
+                    String nuevaDireccion = jTextField17.getText();
+                    String nuevoCelular = jTextField18.getText();
+
+                    Trabajador nuevo = new Trabajador(usuario, nuevaContraseña, nuevoNombre, nuevosApellidos, nuevoDni, nuevaDireccion, nuevoCelular);
+
+                    boolean actualizado = TrabajadorDAO.actualizarTrabajador(nuevo);
+
+                    if (actualizado) {
+                        JOptionPane.showMessageDialog(null, "✅ Datos actualizados correctamente.");
+                        cargarPanelesTrabajadores();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "❌ No se pudo actualizar el trabajador.");
+                    }
+
+                    // Bloquear nuevamente los campos
+                    jPasswordField3.setEditable(false);
+                    jTextField14.setEditable(false);
+                    jTextField15.setEditable(false);
+                    jTextField16.setEditable(false);
+                    jTextField17.setEditable(false);
+                    jTextField18.setEditable(false);
+                    jTextField1.setEditable(false);
+                }
+            }
+        });
+    }
+}
+
+
+
+                    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -429,6 +737,7 @@ public class AdministrarUser extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
@@ -438,5 +747,6 @@ public class AdministrarUser extends javax.swing.JPanel {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JToggleButton jToggleButton4;
     // End of variables declaration//GEN-END:variables
 }
