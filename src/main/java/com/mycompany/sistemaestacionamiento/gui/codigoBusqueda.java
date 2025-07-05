@@ -105,7 +105,7 @@ public class codigoBusqueda extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 500, 190));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 500, 220));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));

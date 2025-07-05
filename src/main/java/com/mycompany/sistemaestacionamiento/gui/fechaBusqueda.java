@@ -57,7 +57,7 @@ public class fechaBusqueda extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setText("texto busqueda fecha");
+        jTextField1.setText("texto busqueda fecha (YYYY-MM-DD)");
         add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 300, -1));
 
         jToggleButton1.setBackground(new java.awt.Color(31, 39, 115));
@@ -83,7 +83,7 @@ public class fechaBusqueda extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 500, 300));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 550, 420));
     }// </editor-fold>//GEN-END:initComponents
 
 

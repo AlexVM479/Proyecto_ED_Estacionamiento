@@ -76,7 +76,7 @@ public class placaBusqueda extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 500, 300));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 550, 390));
 
         jTextField1.setText("texto busqueda placa");
         add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 300, -1));

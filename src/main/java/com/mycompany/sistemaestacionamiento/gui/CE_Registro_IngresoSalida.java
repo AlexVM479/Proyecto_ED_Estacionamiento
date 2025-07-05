@@ -290,7 +290,7 @@ public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
 
         encolado_title.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         encolado_title.setForeground(new java.awt.Color(225, 225, 225));
-        encolado_title.setText("Encolado en Posición:");
+        encolado_title.setText("ID_Estacionamiento:");
         jPanel1.add(encolado_title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 140, 20));
 
         horaingreso_title.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
