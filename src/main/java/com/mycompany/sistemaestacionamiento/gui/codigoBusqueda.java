@@ -3,6 +3,7 @@ package com.mycompany.sistemaestacionamiento.gui;
 import control_busqueda.Conductor;
 import control_busqueda.HistorialController;
 import control_busqueda.HistorialEstacionamiento;
+import java.awt.Color;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,6 +15,8 @@ public class codigoBusqueda extends javax.swing.JPanel {
         initComponents();
 
         jToggleButton1.addActionListener(e -> buscarPorCodigo());
+        jTextField1.setText("texto de Busqueda por codigo");
+        jTextField1.setForeground(java.awt.Color.GRAY);   
     }
 
     private void buscarPorCodigo() {
@@ -78,6 +81,19 @@ public class codigoBusqueda extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextField1.setText("texto de Busqueda por codigo");
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 290, -1));
 
         jToggleButton1.setBackground(new java.awt.Color(31, 39, 115));
@@ -165,6 +181,25 @@ public class codigoBusqueda extends javax.swing.JPanel {
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 500, 130));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+        if (jTextField1.getText().equals("texto de Busqueda por codigo")) {
+            jTextField1.setText("");
+            jTextField1.setForeground(Color.BLACK);
+}
+    }//GEN-LAST:event_jTextField1FocusGained
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        if (jTextField1.getText().isEmpty()) {
+            jTextField1.setText("texto de Busqueda por codigo");
+            jTextField1.setForeground(Color.GRAY);
+}
+
+    }//GEN-LAST:event_jTextField1FocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

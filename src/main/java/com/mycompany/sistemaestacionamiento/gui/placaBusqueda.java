@@ -2,6 +2,7 @@ package com.mycompany.sistemaestacionamiento.gui;
 
 import control_busqueda.HistorialController;
 import control_busqueda.HistorialEstacionamiento;
+import java.awt.Color;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -13,6 +14,8 @@ public class placaBusqueda extends javax.swing.JPanel {
     public placaBusqueda() {
         initComponents();
         configurarEventos(); // ← Aquí enlazamos el botón BUSCAR
+        jTextField1.setText("texto busqueda placa");
+        jTextField1.setForeground(java.awt.Color.GRAY); 
     }
     private void configurarEventos() {
     jToggleButton1.addActionListener(e -> buscarPorPlaca());
@@ -79,6 +82,14 @@ public class placaBusqueda extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 550, 390));
 
         jTextField1.setText("texto busqueda placa");
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
         add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 300, -1));
 
         jToggleButton1.setBackground(new java.awt.Color(31, 39, 115));
@@ -88,6 +99,19 @@ public class placaBusqueda extends javax.swing.JPanel {
         jToggleButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 110, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+        if (jTextField1.getText().equals("texto busqueda placa")) {
+            jTextField1.setText("");
+            jTextField1.setForeground(Color.BLACK);}
+    }//GEN-LAST:event_jTextField1FocusGained
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+         if (jTextField1.getText().isEmpty()) {
+            jTextField1.setText("texto busqueda placa");
+            jTextField1.setForeground(Color.GRAY);
+}
+    }//GEN-LAST:event_jTextField1FocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -205,9 +205,7 @@ jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
         jLabel35.setText("Password :");
         jPanel6.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 136, -1, -1));
 
-        jPasswordField3.setBackground(new java.awt.Color(51, 51, 51));
         jPasswordField3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jPasswordField3.setForeground(new java.awt.Color(255, 255, 255));
         jPasswordField3.setText("jPasswordField1");
         jPasswordField3.setBorder(null);
         jPasswordField3.setCaretColor(new java.awt.Color(204, 204, 204));
@@ -218,18 +216,17 @@ jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
         });
         jPanel6.add(jPasswordField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(167, 129, 140, 20));
 
-        jTextField13.setBackground(new java.awt.Color(51, 51, 51));
         jTextField13.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jTextField13.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField13.setText("jTextField1");
         jTextField13.setBorder(null);
         jTextField13.setCaretColor(new java.awt.Color(204, 204, 204));
+        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField13ActionPerformed(evt);
+            }
+        });
         jPanel6.add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 140, 20));
 
-        jTextField14.setBackground(new java.awt.Color(51, 51, 51));
         jTextField14.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jTextField14.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField14.setText("jTextField2");
         jTextField14.setBorder(null);
         jPanel6.add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(167, 83, 140, 20));
 
@@ -258,43 +255,28 @@ jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
         jLabel40.setText("Celular :");
         jPanel6.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
-        jTextField15.setBackground(new java.awt.Color(51, 51, 51));
         jTextField15.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jTextField15.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField15.setText("jTextField3");
         jTextField15.setBorder(null);
         jTextField15.setCaretColor(new java.awt.Color(204, 204, 204));
         jPanel6.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 236, 129, 20));
 
-        jTextField16.setBackground(new java.awt.Color(51, 51, 51));
         jTextField16.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jTextField16.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField16.setText("jTextField4");
         jTextField16.setBorder(null);
         jTextField16.setCaretColor(new java.awt.Color(204, 204, 204));
         jPanel6.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 276, 129, 20));
 
-        jTextField17.setBackground(new java.awt.Color(51, 51, 51));
         jTextField17.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jTextField17.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField17.setText("jTextField5");
         jTextField17.setBorder(null);
         jTextField17.setCaretColor(new java.awt.Color(204, 204, 204));
         jPanel6.add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 362, 129, 20));
 
-        jTextField18.setBackground(new java.awt.Color(51, 51, 51));
         jTextField18.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jTextField18.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField18.setText("jTextField6");
         jTextField18.setBorder(null);
         jTextField18.setCaretColor(new java.awt.Color(204, 204, 204));
         jPanel6.add(jTextField18, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 405, 129, 20));
         jPanel6.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 20, 20));
 
-        jTextField1.setBackground(new java.awt.Color(51, 51, 51));
         jTextField1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("jTextField7");
         jTextField1.setBorder(null);
         jTextField1.setCaretColor(new java.awt.Color(204, 204, 204));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -309,7 +291,7 @@ jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        jPanel7.setBackground(new java.awt.Color(58, 65, 133));
+        jPanel7.setBackground(new java.awt.Color(153, 153, 255));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel8.setBackground(new java.awt.Color(31, 39, 115));
@@ -427,9 +409,10 @@ jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(58, 65, 133));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Administrar Usuarios");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 190, 30));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 190, 20));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 590, 30));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 190, 20));
 
         jToggleButton4.setBackground(new java.awt.Color(31, 39, 115));
         jToggleButton4.setFont(new java.awt.Font("Segoe UI Black", 1, 10)); // NOI18N
@@ -472,6 +455,10 @@ jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField13ActionPerformed
     
     
     private void SetImageLabel(JLabel labelName, String root) {
