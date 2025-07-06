@@ -7,15 +7,17 @@ import Registro_Alex.EstacionamientoController;
 import Registro_Alex.Estacionamiento;
 import Registro_Alex.HistorialEstacionamiento;
 import Registro_Alex.HistorialController;
+import Registro_Alex.SolicitudIngreso;
 import java.time.LocalTime;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
 
     private final EstacionamientoController estacionamientoController = new EstacionamientoController();
     private final HistorialController historialController = new HistorialController();
-    private final VehiculoController vehiculoController = new VehiculoController();  // Instancia del VehiculoController
+    private final VehiculoController vehiculoController = new VehiculoController();
+    private final Queue<SolicitudIngreso> colaEspera = new LinkedList<>();
 
     public CE_Registro_IngresoSalida() {
         initComponents();
@@ -42,55 +44,98 @@ public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
 
         // Validar la placa del vehículo
         String placa = Nplaca_ingreso_txt.getText().trim();
+        if (placa.isEmpty()) {
+            aviso_Nplaca.setText("Ingrese una placa válida.");
+            return;
+        }
 
         // Buscar si la placa ya está registrada en la base de datos
         Vehiculo vehiculo = vehiculoController.buscarVehiculoPorPlaca(placa);
 
         // Si no se encuentra el vehículo, se trata de una nueva placa, así que la registramos
-        if (vehiculo == null) {
-            // Aquí registramos la nueva placa
-            Vehiculo nuevoVehiculo = new Vehiculo();
-            nuevoVehiculo.setPlaca(placa); // Asignamos la nueva placa
-            nuevoVehiculo.setTipo(tipovehiculo_combobox.getSelectedItem().toString()); // Asignamos el tipo del vehículo
+        String tipo = tipovehiculo_combobox.getSelectedItem().toString();
 
-            // Llamamos al método que registra el vehículo en la base de datos
-            vehiculoController.registrarVehiculoNuevo(nuevoVehiculo);
-
-            // Opcionalmente, puedes agregar un mensaje de éxito de registro de vehículo
-            System.out.println("Nuevo vehículo registrado: " + placa);
-        } else {
+            if (vehiculo == null) {
+                // Aún no registramos en la base de datos hasta asegurar espacio
+                vehiculo = new Vehiculo(placa, tipo);
+            }
+            else {
             // Verificamos que la placa no tenga una salida pendiente
             boolean vehiculoConSalidaPendiente = historialController.tieneSalidaPendiente(placa);
-            if (vehiculoConSalidaPendiente) {
-                aviso_Nplaca.setText("El vehículo ya está en uso. No se puede registrar nuevamente.");
-                return;
+                if (vehiculoConSalidaPendiente) {
+                    if (estaEnCola(placa)) {
+                        aviso_Nplaca.setText("El vehículo ya está en la cola.");
+                        return;
+                    }
+
+                    SolicitudIngreso solicitud = new SolicitudIngreso(vehiculo, codigoConductor);
+                    colaEspera.add(solicitud);
+                    System.out.println("Vehículo encolado: " + placa);
+                    mostrarColaEnConsola();
+
+                    aviso_Nplaca.setText("El vehículo ya está ocupado. Encolado correctamente.");
+                    encoladoposicion_txt.setText("Posición en cola: " + colaEspera.size());
+                    return;
+                }
             }
-        }
 
         // Asignar el estacionamiento dependiendo de la puerta
         int numeroPuerta = Integer.parseInt((String) puerta_combobox.getSelectedItem());
-        String lugar = (numeroPuerta == 7) ? "Odontología" : "Comedor";
+        String zonaPreferida = obtenerZonaPorPuerta(numeroPuerta);
 
-        Estacionamiento estacionamiento = estacionamientoController.buscarEstacionamientoDisponible(lugar);
+        Estacionamiento estacionamiento = estacionamientoController.buscarEstacionamientoDisponible(zonaPreferida);
 
         if (estacionamiento == null) {
             hayespaciodisponible_txt.setText("No hay espacio disponible.");
-            return;
+            if (estaEnCola(placa)) {
+                aviso_Nplaca.setText("El vehículo ya está en la cola.");
+                return;
+            }
+
+            Vehiculo vehiculoEnEspera = new Vehiculo(placa, tipo);
+            SolicitudIngreso solicitud = new SolicitudIngreso(vehiculoEnEspera, codigoConductor);
+            colaEspera.add(solicitud);
+
+            System.out.println("Vehículo añadido a la cola: " + placa);
+            mostrarColaEnConsola();
+
+            // Mostrar confirmación en consola
+            System.out.println("Vehículo añadido a la cola: " + placa);
+
+            // Imprimir estado actual de la cola
+            System.out.println("Estado actual de la cola:");
+            int pos = 1;
+            for (SolicitudIngreso s : colaEspera) {
+                System.out.println("[" + pos++ + "] Placa: " + s.getVehiculo().getPlaca()
+                    + " | Tipo: " + s.getVehiculo().getTipo()
+                    + " | Conductor: " + s.getCodigoConductor());
+            }
+
+            return; // Importante: salir para que no intente registrar el ingreso
+        }
+        
+        if (vehiculoController.buscarVehiculoPorPlaca(placa) == null) {
+            vehiculoController.registrarVehiculoNuevo(vehiculo);
+            System.out.println("Nuevo vehículo registrado: " + placa);
         }
 
         // Registrar el ingreso
-        boolean exito = estacionamientoController.registrarIngreso(placa, codigoConductor, vehiculo.getTipo(), numeroPuerta);
-
+        boolean exito = estacionamientoController.registrarIngreso(
+            placa,
+            codigoConductor,
+            vehiculo.getTipo(),
+            zonaPreferida,
+            estacionamiento.getLugar()
+        );
         if (exito) {
             hayespaciodisponible_txt.setText("Espacio asignado: " + estacionamiento.getLugar());
             espacioasignado_txt.setText(estacionamiento.getLugar());
-            encoladoposicion_txt.setText("Posición " + estacionamiento.getId());
             horaingreso_txt.setText(LocalTime.now().toString());
         } else {
             hayespaciodisponible_txt.setText("Error al registrar ingreso.");
         }
     } catch (NumberFormatException e) {
-        System.out.println("❌ Error al registrar ingreso: " + e.getMessage());
+        System.out.println(" Error al registrar ingreso: " + e.getMessage());
     }
 }
     
@@ -112,39 +157,93 @@ public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
          
          // Aquí no se realiza la salida aún
      } catch (Exception e) {
-         System.out.println("❌ Error al buscar vehículo: " + e.getMessage());
+         System.out.println(" Error al buscar vehículo: " + e.getMessage());
      }
  }
 
     private void registrarSalida() {
-     try {
-         // Obtener la placa del vehículo para registrar la salida
-         String placa = Nplaca_salida_txt.getText().trim();
-         HistorialEstacionamiento historial = historialController.buscarHistorialPorPlaca(placa);
+        try {
+            // Obtener la placa del vehículo para registrar la salida
+            String placa = Nplaca_salida_txt.getText().trim();
+            HistorialEstacionamiento historial = historialController.buscarHistorialPorPlaca(placa);
 
-         if (historial == null) {
-             aviso_busqueda.setText("Vehículo no encontrado.");
-             return;
-         }
+            if (historial == null) {
+                aviso_busqueda.setText("Vehículo no encontrado.");
+                return;
+            }
 
-         // Calcular el tiempo total de estacionamiento
-         LocalTime horaIngreso = historial.getHoraEntrada();
-         LocalTime horaSalida = LocalTime.now();
-         long tiempoTotal = java.time.temporal.ChronoUnit.MINUTES.between(horaIngreso, horaSalida);
-         tiempototal_txt.setText(tiempoTotal + " minutos");
+            // Calcular el tiempo total de estacionamiento
+            LocalTime horaIngreso = historial.getHoraEntrada();
+            LocalTime horaSalida = LocalTime.now();
+            long tiempoTotal = java.time.temporal.ChronoUnit.MINUTES.between(horaIngreso, horaSalida);
+            tiempototal_txt.setText(tiempoTotal + " minutos");
 
-         // Registrar la salida en la base de datos
-         boolean exito = estacionamientoController.registrarSalida(placa);
+            // Registrar la salida en la base de datos
+            boolean exito = estacionamientoController.registrarSalida(placa);
 
-         if (exito) {
-             aviso_busqueda.setText("Salida registrada exitosamente.");
-         } else {
-             aviso_busqueda.setText("Error al registrar salida.");
-         }
-     } catch (Exception e) {
-         System.out.println("❌ Error al registrar salida: " + e.getMessage());
-     }
- }
+            if (exito) {
+                aviso_busqueda.setText("Salida registrada exitosamente.");
+
+                if (!colaEspera.isEmpty()) {
+                    SolicitudIngreso siguiente = colaEspera.poll(); // Quitamos al primero
+
+                    Vehiculo vehiculoSiguiente = siguiente.getVehiculo();
+                    int codigoSiguiente = siguiente.getCodigoConductor();
+
+                    // Registrar el vehículo si no estaba en la BD
+                    if (vehiculoController.buscarVehiculoPorPlaca(vehiculoSiguiente.getPlaca()) == null) {
+                        vehiculoController.registrarVehiculoNuevo(vehiculoSiguiente);
+                    }
+
+                    int puerta = 7; // Por defecto
+                    try {
+                        if (puerta_combobox.getSelectedItem() != null) {
+                            puerta = Integer.parseInt((String) puerta_combobox.getSelectedItem());
+                        }
+                    } catch (Exception e) {
+                        System.out.println("⚠️ Error obteniendo número de puerta, se usará puerta 7 por defecto.");
+                    }
+
+                    String zona = obtenerZonaPorPuerta(puerta);
+                    Estacionamiento estacionamiento = estacionamientoController.buscarEstacionamientoDisponible(zona);
+
+                    if (estacionamiento == null) {
+                        hayespaciodisponible_txt.setText("No hay espacio disponible para el siguiente en cola.");
+                        return;
+                    }
+
+                    boolean registrado = estacionamientoController.registrarIngreso(
+                        vehiculoSiguiente.getPlaca(),
+                        codigoSiguiente,
+                        vehiculoSiguiente.getTipo(),
+                        zona,
+                        estacionamiento.getLugar()
+                    );
+
+                    if (registrado) {
+                        hayespaciodisponible_txt.setText("Espacio liberado. Ingresó: " + vehiculoSiguiente.getPlaca());
+                        System.out.println("Vehículo atendido desde cola: " + vehiculoSiguiente.getPlaca());
+                    } else {
+                        hayespaciodisponible_txt.setText("Error al ingresar desde cola.");
+                        System.out.println("Error al registrar ingreso desde cola.");
+                    }
+
+                    // Imprimir estado actual de la cola
+                    System.out.println("📋 Estado actual de la cola:");
+                    int pos = 1;
+                    for (SolicitudIngreso s : colaEspera) {
+                        System.out.println("[" + pos++ + "] Placa: " + s.getVehiculo().getPlaca() + " | Tipo: " + s.getVehiculo().getTipo() + " | Conductor: " + s.getCodigoConductor());
+                    }
+                    if (colaEspera.isEmpty()) {
+                        System.out.println("Cola vacía.");
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al registrar salida: " + e.getMessage());
+        }
+    }
 
     private void restablecerIngreso() {
         codigo_txt.setText("");
@@ -163,6 +262,40 @@ public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
         espacio_txt.setText("");
         horaingreso_salida_txt.setText("");
         tipovehiculo_txt.setText("");
+    }
+    
+    private void mostrarColaEnConsola() {
+        System.out.println("Estado actual de la cola de espera:");
+        if (colaEspera.isEmpty()) {
+            System.out.println(" No hay vehículos en cola.");
+        } else {
+            int pos = 1;
+            for (SolicitudIngreso solicitud : colaEspera) {
+                System.out.println(pos + ". Placa: " + solicitud.getVehiculo().getPlaca()
+                    + ", Tipo: " + solicitud.getVehiculo().getTipo()
+                    + ", Conductor: " + solicitud.getCodigoConductor());
+                pos++;
+            }
+        }
+        System.out.println("------------------------------------");
+    }
+    
+    private String obtenerZonaPorPuerta(int numeroPuerta) {
+    // Preferencia por Odontología si es puerta 5, 6 o 7
+        if (numeroPuerta >= 5 && numeroPuerta <= 7) {
+            return "Odontologia";
+        } else {
+            return "Comedor";
+        }
+    }
+    
+    private boolean estaEnCola(String placa) {
+        for (SolicitudIngreso solicitud : colaEspera) {
+            if (solicitud.getVehiculo().getPlaca().equalsIgnoreCase(placa)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     @SuppressWarnings("unchecked")
@@ -290,8 +423,8 @@ public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
 
         encolado_title.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         encolado_title.setForeground(new java.awt.Color(225, 225, 225));
-        encolado_title.setText("ID_Estacionamiento:");
-        jPanel1.add(encolado_title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 140, 20));
+        encolado_title.setText("Sistema de Cola:");
+        jPanel1.add(encolado_title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 110, 20));
 
         horaingreso_title.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         horaingreso_title.setForeground(new java.awt.Color(225, 225, 225));
@@ -300,11 +433,11 @@ public class CE_Registro_IngresoSalida extends javax.swing.JPanel {
 
         encoladoposicion_txt.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         encoladoposicion_txt.setForeground(new java.awt.Color(225, 225, 225));
-        jPanel1.add(encoladoposicion_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 90, 20));
+        jPanel1.add(encoladoposicion_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 300, 20));
 
         horaingreso_txt.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         horaingreso_txt.setForeground(new java.awt.Color(225, 225, 225));
-        jPanel1.add(horaingreso_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 100, 20));
+        jPanel1.add(horaingreso_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 70, 20));
 
         espacioasignado_title.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         espacioasignado_title.setForeground(new java.awt.Color(225, 225, 225));

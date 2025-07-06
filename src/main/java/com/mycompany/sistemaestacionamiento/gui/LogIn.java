@@ -64,7 +64,7 @@ public class LogIn extends javax.swing.JFrame {
         login_title.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         login_title.setForeground(new java.awt.Color(40, 40, 146));
         login_title.setText("Log In");
-        jPanel2.add(login_title, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 121, 70, 30));
+        jPanel2.add(login_title, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 121, 80, 30));
 
         usuario_title.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         usuario_title.setForeground(new java.awt.Color(95, 95, 158));

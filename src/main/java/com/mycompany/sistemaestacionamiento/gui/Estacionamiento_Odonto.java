@@ -28,7 +28,7 @@ public class Estacionamiento_Odonto extends javax.swing.JPanel {
             // Consulta SQL para obtener estacionamientos con estado = 0 (vacío)
             String sql = "SELECT * FROM ESTACIONAMIENTO WHERE lugar LIKE ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            String lugar = "Odontología";  // O el lugar que corresponda, por ejemplo "Comedor"
+            String lugar = "Odontologia";  // O el lugar que corresponda, por ejemplo "Comedor"
             stmt.setString(1, lugar + "%");  // Concatenar "%" para hacer la búsqueda por lugar
             ResultSet rs = stmt.executeQuery();
 

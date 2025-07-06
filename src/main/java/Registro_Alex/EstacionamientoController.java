@@ -11,16 +11,15 @@ import java.util.List;
 public class EstacionamientoController {
 
     // Registrar el ingreso de un vehículo
-    public boolean registrarIngreso(String placa, int codigoConductor, String tipoVehiculo, int numeroPuerta) {
+    public boolean registrarIngreso(String placa, int codigoConductor, String tipoVehiculo, String zona, String lugar) {
         boolean exito = false;
         try (Connection conn = Conexion.conectar()) {
-            // Consulta para obtener un estacionamiento libre en el lugar adecuado
-            String sql = "SELECT * FROM ESTACIONAMIENTO WHERE estado = 0 AND lugar LIKE ?";
+            // Buscar el ID del estacionamiento a partir del lugar exacto
+            String sql = "SELECT * FROM ESTACIONAMIENTO WHERE lugar = ? AND estado = 0";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            String lugar = (numeroPuerta == 7) ? "Odontología" : "Comedor"; // Según el número de puerta
-            stmt.setString(1, lugar + "%");
+            stmt.setString(1, lugar);
             ResultSet rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 int idEstacionamiento = rs.getInt("ID_Estacionamiento");
                 String insertSql = "INSERT INTO HISTORIAL_ESTACIONAMIENTO (Placa, Codigo_Conductor, ID_Estacionamiento, fecha, hora_entrada) VALUES (?, ?, ?, ?, ?)";
@@ -123,7 +122,7 @@ public class EstacionamientoController {
     public List<Estacionamiento> obtenerEstacionamientosOdontologia() {
         List<Estacionamiento> estacionamientos = new ArrayList<>();
         try (Connection conn = Conexion.conectar()) {
-            String sql = "SELECT * FROM ESTACIONAMIENTO WHERE lugar LIKE 'Odontología%'";
+            String sql = "SELECT * FROM ESTACIONAMIENTO WHERE lugar LIKE 'Odontologia%'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
